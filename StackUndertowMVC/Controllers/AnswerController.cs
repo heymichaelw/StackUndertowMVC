@@ -43,20 +43,40 @@ namespace StackUndertowMVC.Controllers
             }
             return View(answer);
         }
-        
+
         [HttpPost]
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string submit)
         {
             var answer = db.Answers.Find(id);
-            var upvote = new Upvote
-            {
-                VoterId = User.Identity.GetUserId(),
-                AnswerId = id
-            };
+            switch (submit)
+            
 
-            db.Upvotes.Add(upvote);
-            answer.Score++;
-            db.Entry(answer).State = EntityState.Modified;
+            {
+                case "Upvote":
+                    var upvote = new Upvote
+                    {
+                        VoterId = User.Identity.GetUserId(),
+                        AnswerId = id
+                    };
+
+                    db.Upvotes.Add(upvote);
+                    db.SaveChanges();
+                    int votecount = db.Upvotes.Where(u => u.AnswerId == id).ToList().Count;
+                    answer.Score = votecount;
+                    db.Entry(answer).State = EntityState.Modified;
+                    break;
+
+                case "Unvote":
+                    var me = User.Identity.GetUserId();
+                    Upvote upvote1 = db.Upvotes.Where(u => (u.VoterId == me && u.AnswerId == id)).FirstOrDefault();
+                    db.Upvotes.Remove(upvote1);
+                    db.SaveChanges();
+                    int votecount1 = db.Upvotes.Where(u => u.AnswerId == id).ToList().Count;
+                    answer.Score = votecount1;
+                    db.Entry(answer).State = EntityState.Modified;
+                    break;
+            }
+
             db.SaveChanges();
 
             return RedirectToAction("Index");
@@ -66,9 +86,9 @@ namespace StackUndertowMVC.Controllers
         public ActionResult Create(int id)
         {
 
-          ViewBag.Question = id;
-            
-        
+            ViewBag.Question = id;
+
+
             ViewBag.QuestionId = new SelectList(db.Questions, "Id", "Title");
             return View();
         }

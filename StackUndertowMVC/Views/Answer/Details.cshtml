@@ -36,13 +36,16 @@
         <dd>
             @if(ViewBag.HasVoted)
             {
-                <span>Downvote</span>
+                using (Html.BeginForm())
+                {
+                    <input name="submit" type="submit" value="Unvote" class="btn btn-danger" />
+                }
             }
             else
             {
                 using (Html.BeginForm())
                 {
-                    <input type="submit" value="Upvote" class="btn btn-success" />
+                    <input name="submit" type="submit" value="Upvote" class="btn btn-success" />
                 }
             }
         </dd>
