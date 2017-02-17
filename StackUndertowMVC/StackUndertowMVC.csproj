@@ -211,12 +211,17 @@
     <Compile Include="Migrations\201702151941127_Initial.Designer.cs">
       <DependentUpon>201702151941127_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702171814583_AddedUpvoteModel.cs" />
+    <Compile Include="Migrations\201702171814583_AddedUpvoteModel.Designer.cs">
+      <DependentUpon>201702171814583_AddedUpvoteModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Upvote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -304,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702151941127_Initial.resx">
       <DependentUpon>201702151941127_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702171814583_AddedUpvoteModel.resx">
+      <DependentUpon>201702171814583_AddedUpvoteModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

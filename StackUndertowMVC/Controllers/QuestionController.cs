@@ -25,6 +25,8 @@ namespace StackUndertowMVC.Controllers
         // GET: Question/Details/5
         public ActionResult Details(int? id)
         {
+
+            ViewBag.Answers = db.Answers.Where(a => a.QuestionId == id).ToList();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

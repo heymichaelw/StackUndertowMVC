@@ -32,5 +32,6 @@ namespace StackUndertowMVC.Models
 
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Upvote> Upvotes { get; set; }
     }
 }

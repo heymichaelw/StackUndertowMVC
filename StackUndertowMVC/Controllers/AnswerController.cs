@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StackUndertowMVC.Models;
+using Microsoft.AspNet.Identity;
 
 namespace StackUndertowMVC.Controllers
 {
@@ -24,6 +25,13 @@ namespace StackUndertowMVC.Controllers
         // GET: Answer/Details/5
         public ActionResult Details(int? id)
         {
+            string me = User.Identity.GetUserId();
+
+            bool hasVoted = db.Upvotes
+                .Where(u => (u.VoterId == me && u.AnswerId == id))
+                .Any();
+            ViewBag.HasVoted = hasVoted;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -34,6 +42,24 @@ namespace StackUndertowMVC.Controllers
                 return HttpNotFound();
             }
             return View(answer);
+        }
+        
+        [HttpPost]
+        public ActionResult Details(int id)
+        {
+            var answer = db.Answers.Find(id);
+            var upvote = new Upvote
+            {
+                VoterId = User.Identity.GetUserId(),
+                AnswerId = id
+            };
+
+            db.Upvotes.Add(upvote);
+            answer.Score++;
+            db.Entry(answer).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Answer/Create
