@@ -37,11 +37,16 @@ namespace StackUndertowMVC.Controllers
         }
 
         // GET: Answer/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
+
+          ViewBag.Question = id;
+            
+        
             ViewBag.QuestionId = new SelectList(db.Questions, "Id", "Title");
             return View();
         }
+
 
         // POST: Answer/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -119,6 +124,7 @@ namespace StackUndertowMVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

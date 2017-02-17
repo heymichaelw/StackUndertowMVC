@@ -37,7 +37,7 @@ namespace StackUndertowMVC.Controllers
             return View(question);
         }
 
-        // GET: Question/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.OwnerId = new SelectList(db.Users, "Id", "Email");
